@@ -4,6 +4,6 @@ export type IDonor = {
    lastName: string;
    email: string;
    phone?: string;
-   presentAddress?: string;
+   presentAddress: string;
    permanentAddress?: string;
 };

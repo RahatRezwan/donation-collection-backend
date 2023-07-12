@@ -3,11 +3,24 @@ import httpStatus from 'http-status';
 import catchAsync from '../../shared/catchAsync';
 import sendResponse from '../../shared/sendResponse';
 import { UserService } from './user.service';
-import { IUser } from './user.interface';
 
+/* create donor */
+const createDonor = catchAsync(async (req: Request, res: Response) => {
+   const { donor, ...userData } = req.body;
+   const donorCreated = await UserService.createDonor(donor, userData);
+
+   sendResponse(res, {
+      statusCode: httpStatus.CREATED,
+      success: true,
+      message: 'Donor created successfully',
+      data: donorCreated,
+   });
+});
+
+/* get all users */
 const getAllUsers = catchAsync(async (req: Request, res: Response) => {
    const users = await UserService.getAllUsers();
-   //get all users from db
+
    sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
@@ -17,5 +30,6 @@ const getAllUsers = catchAsync(async (req: Request, res: Response) => {
 });
 
 export const UserController = {
+   createDonor,
    getAllUsers,
 };
