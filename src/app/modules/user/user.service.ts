@@ -13,6 +13,17 @@ const createDonor = async (donor: IDonor, userData: IUser) => {
 
    /* password hashing */
    userData.password = userData.password && (await bcrypt.hash(userData.password, 12));
+
+   //check if donor already exists
+   const [donorExists] = await pool.query<RowDataPacket[]>('SELECT * FROM donors WHERE email = ?', [
+      donor.email,
+   ]);
+   const existsDonors: IDonor[] | RowDataPacket[] = donorExists.map((row: RowDataPacket) => row);
+   if (existsDonors.length > 0) {
+      throw new ApiError(httpStatus.BAD_REQUEST, 'Donor already exists');
+      return;
+   }
+
    try {
       //add donor do donors table and get donor id
       const [donorResult] = await pool.query('INSERT INTO donors SET ?', donor);
@@ -45,6 +56,17 @@ const createAdmin = async (admin: IAdmin, userData: IUser) => {
 
    /* password hashing */
    userData.password = userData.password && (await bcrypt.hash(userData.password, 12));
+
+   //check if admin already exists
+   const [adminExists] = await pool.query<RowDataPacket[]>('SELECT * FROM admin WHERE email = ?', [
+      admin.email,
+   ]);
+   const existsAdmin: IAdmin[] | RowDataPacket[] = adminExists.map((row: RowDataPacket) => row);
+   if (existsAdmin.length > 0) {
+      throw new ApiError(httpStatus.BAD_REQUEST, 'Admin already exists');
+      return;
+   }
+
    try {
       //add admin to admin table and get admin id
       const [adminResult] = await pool.query('INSERT INTO admin SET ?', admin);
@@ -76,7 +98,7 @@ const getAllUsers = async (): Promise<IUser[] | RowDataPacket[]> => {
    try {
       const [results] = await pool.query<RowDataPacket[]>('SELECT * FROM users');
       const users: IUser[] | RowDataPacket[] = results.map((row: RowDataPacket) => row);
-      //if users have password field, remove it, users have donor or admin id. display full donor or admin object
+
       for (let user of users) {
          if (user.password) {
             delete user.password;
