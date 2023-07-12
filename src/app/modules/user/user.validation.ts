@@ -28,6 +28,30 @@ const createDonorZodSchema = z.object({
    }),
 });
 
+const createAdminZodSchema = z.object({
+   body: z.object({
+      password: z.string({
+         required_error: 'Password is required',
+      }),
+      admin: z.object({
+         firstName: z.string({
+            required_error: 'First name is required',
+         }),
+         lastName: z.string({
+            required_error: 'Last name is required',
+         }),
+         email: z
+            .string({
+               required_error: 'Email is required',
+            })
+            .email({
+               message: 'Invalid email address',
+            }),
+      }),
+   }),
+});
+
 export const UserValidation = {
    createDonorZodSchema,
+   createAdminZodSchema,
 };

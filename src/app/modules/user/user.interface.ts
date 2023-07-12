@@ -1,3 +1,4 @@
+import { IAdmin } from '../admin/admin.interface';
 import { IDonor } from '../donor/donor.interface';
 
 export type IUser = {
@@ -5,5 +6,5 @@ export type IUser = {
    role: string;
    password?: string;
    donor?: number | IDonor;
-   // admin?: number | IAdmin;
+   admin?: number | IAdmin;
 };

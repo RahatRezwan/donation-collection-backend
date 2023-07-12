@@ -11,6 +11,13 @@ router.post(
    UserController.createDonor,
 );
 
+/* create admin */
+router.post(
+   '/create-admin',
+   validateRequest(UserValidation.createAdminZodSchema),
+   UserController.createAdmin,
+);
+
 /* get all users */
 router.get('/', UserController.getAllUsers);
 
