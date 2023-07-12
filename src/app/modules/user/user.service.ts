@@ -10,6 +10,7 @@ import { IAdmin } from '../admin/admin.interface';
 /* create donor */
 const createDonor = async (donor: IDonor, userData: IUser) => {
    userData.role = 'donor';
+   userData.email = donor.email;
 
    /* password hashing */
    userData.password = userData.password && (await bcrypt.hash(userData.password, 12));
@@ -53,6 +54,7 @@ const createDonor = async (donor: IDonor, userData: IUser) => {
 /* create admin */
 const createAdmin = async (admin: IAdmin, userData: IUser) => {
    userData.role = 'admin';
+   userData.email = admin.email;
 
    /* password hashing */
    userData.password = userData.password && (await bcrypt.hash(userData.password, 12));

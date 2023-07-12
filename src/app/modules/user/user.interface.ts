@@ -5,6 +5,7 @@ export type IUser = {
    id: number;
    role: string;
    password?: string;
+   email?: string;
    donor?: number | IDonor;
    admin?: number | IAdmin;
 };

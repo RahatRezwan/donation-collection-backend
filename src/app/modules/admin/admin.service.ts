@@ -29,6 +29,13 @@ const getSingleAdmin = async (adminId: string) => {
 /* update single admin */
 const updateSingleAdmin = async (adminId: string, updateData: any) => {
    try {
+      //update user email if admin email is updated
+      if (updateData.email) {
+         const [user] = await pool.query('UPDATE users SET email = ? WHERE admin = ?', [
+            updateData.email,
+            Number(adminId),
+         ]);
+      }
       const [admin] = await pool.query('UPDATE admins SET ? WHERE id = ?', [
          updateData,
          Number(adminId),

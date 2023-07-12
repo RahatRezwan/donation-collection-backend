@@ -29,6 +29,13 @@ const getSingleDonor = async (donorId: string) => {
 /* update single donor */
 const updateSingleDonor = async (donorId: string, updateData: any) => {
    try {
+      //update user email if donor email is updated
+      if (updateData.email) {
+         const [user] = await pool.query('UPDATE users SET email = ? WHERE donor = ?', [
+            updateData.email,
+            Number(donorId),
+         ]);
+      }
       const [donor] = await pool.query('UPDATE donors SET ? WHERE id = ?', [
          updateData,
          Number(donorId),
