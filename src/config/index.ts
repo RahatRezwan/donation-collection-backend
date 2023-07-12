@@ -12,4 +12,10 @@ export default {
    database_user: process.env.DB_USER,
    database_password: process.env.DB_PASSWORD,
    database_name: process.env.DB_NAME,
+   jwt: {
+      secret: process.env.JWT_SECRET,
+      refresh_secret: process.env.JWT_REFRESH_SECRET,
+      access_expires_in: process.env.JWT_ACCESS_EXPIRATION,
+      refresh_expires_in: process.env.JWT_REFRESH_EXPIRATION,
+   },
 };
