@@ -8,6 +8,7 @@ const updateDonorZodSchema = z.object({
       phone: z.string().optional(),
       presentAddress: z.string(),
       permanentAddress: z.string().optional(),
+      profilePic: z.string().optional(),
    }),
 });
 

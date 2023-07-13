@@ -3,4 +3,5 @@ export type IAdmin = {
    firstName: string;
    lastName: string;
    email: string;
+   profilePic?: string;
 };

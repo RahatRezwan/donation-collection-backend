@@ -6,4 +6,5 @@ export type IDonor = {
    phone?: string;
    presentAddress: string;
    permanentAddress?: string;
+   profilePic?: string;
 };

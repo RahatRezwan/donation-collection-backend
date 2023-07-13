@@ -5,6 +5,7 @@ const updateAdminZodSchema = z.object({
       firstName: z.string().optional(),
       lastName: z.string().optional(),
       email: z.string().email({ message: 'Invalid email address' }).optional(),
+      profilePic: z.string().optional(),
    }),
 });
 

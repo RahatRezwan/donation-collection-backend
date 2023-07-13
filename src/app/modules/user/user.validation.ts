@@ -24,6 +24,7 @@ const createDonorZodSchema = z.object({
             required_error: 'Present address is required',
          }),
          permanentAddress: z.string().optional(),
+         profilePic: z.string().optional(),
       }),
    }),
 });
@@ -47,6 +48,7 @@ const createAdminZodSchema = z.object({
             .email({
                message: 'Invalid email address',
             }),
+         profilePic: z.string().optional(),
       }),
    }),
 });
