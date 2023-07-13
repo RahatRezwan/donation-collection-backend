@@ -1,10 +1,16 @@
 import express from 'express';
 import { DonationController } from './donation.controller';
+import validateRequest from '../../middleware/validateRequest';
+import { DonationValidation } from './donation.validation';
 
 const router = express.Router();
 
 /* create donation */
-router.post('/create-donation', DonationController.createDonation);
+router.post(
+   '/create-donation',
+   validateRequest(DonationValidation.createDonationZodSchema),
+   DonationController.createDonation,
+);
 
 /* get all donations */
 router.get('/', DonationController.getAllDonations);
@@ -13,7 +19,11 @@ router.get('/', DonationController.getAllDonations);
 router.get('/:id', DonationController.getSingleDonation);
 
 /* update single donation */
-router.put('/:id', DonationController.updateSingleDonation);
+router.patch(
+   '/:id',
+   validateRequest(DonationValidation.updateDonationZodSchema),
+   DonationController.updateSingleDonation,
+);
 
 /* delete single donation */
 router.delete('/:id', DonationController.deleteSingleDonation);
