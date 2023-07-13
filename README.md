@@ -121,48 +121,54 @@ This is the server for the Donation Collection Application. It is built using No
    );
    ```
 
-## Donor API table
+## Donor API
 
-| Method | Endpoint                                        | Description        |
-| ------ | ----------------------------------------------- | ------------------ |
-| POST   | http://localhost:5000/api/v1/users/create-donor | register as donor  |
-| GET    | http://localhost:5000/api/v1/donors             | get all donors     |
-| GET    | http://localhost:5000/api/v1/donors/:id         | get donor by id    |
-| PATCH  | http://localhost:5000/api/v1/donors/:id         | update donor by id |
-| DELETE | http://localhost:5000/api/v1/donors/:id         | delete donor by id |
+| Method | Endpoint                   | Description        |
+| ------ | -------------------------- | ------------------ |
+| POST   | /api/v1/users/create-donor | register as donor  |
+| GET    | /api/v1/donors             | get all donors     |
+| GET    | /api/v1/donors/:id         | get donor by id    |
+| PATCH  | /api/v1/donors/:id         | update donor by id |
+| DELETE | /api/v1/donors/:id         | delete donor by id |
 
-## Admin API table
+## Admin API
 
-| Method | Endpoint                                        | Description        |
-| ------ | ----------------------------------------------- | ------------------ |
-| POST   | http://localhost:5000/api/v1/users/create-admin | register as admin  |
-| GET    | http://localhost:5000/api/v1/admins             | get all admins     |
-| GET    | http://localhost:5000/api/v1/admins/:id         | get admin by id    |
-| PATCH  | http://localhost:5000/api/v1/admins/:id         | update admin by id |
-| DELETE | http://localhost:5000/api/v1/admins/:id         | delete admin by id |
+| Method | Endpoint                   | Description        |
+| ------ | -------------------------- | ------------------ |
+| POST   | /api/v1/users/create-admin | register as admin  |
+| GET    | /api/v1/admins             | get all admins     |
+| GET    | /api/v1/admins/:id         | get admin by id    |
+| PATCH  | /api/v1/admins/:id         | update admin by id |
+| DELETE | /api/v1/admins/:id         | delete admin by id |
 
-## User API table
+## User API
 
-| Method | Endpoint                           | Description   |
-| ------ | ---------------------------------- | ------------- |
-| GET    | http://localhost:5000/api/v1/users | GET All Users |
+| Method | Endpoint      | Description   |
+| ------ | ------------- | ------------- |
+| GET    | /api/v1/users | GET All Users |
 
-## Donation Type API table
+## Auth API
 
-| Method | Endpoint                                                         | Description                |
-| ------ | ---------------------------------------------------------------- | -------------------------- |
-| POST   | http://localhost:5000/api/v1/donation-types/create-donation-type | create donation type       |
-| GET    | http://localhost:5000/api/v1/donation-types                      | get all donation types     |
-| GET    | http://localhost:5000/api/v1/donation-types/:id                  | get donation type by id    |
-| PATCH  | http://localhost:5000/api/v1/donation-types/:id                  | update donation type by id |
-| DELETE | http://localhost:5000/api/v1/donation-types/:id                  | delete donation type by id |
+| Method | Endpoint           | Description |
+| ------ | ------------------ | ----------- |
+| POST   | /api/v1/auth/login | Login       |
 
-## Donation API table
+## Donation Type API
 
-| Method | Endpoint                                               | Description           |
-| ------ | ------------------------------------------------------ | --------------------- |
-| POST   | http://localhost:5000/api/v1/donations/create-donation | create donation       |
-| GET    | http://localhost:5000/api/v1/donations                 | get all donations     |
-| GET    | http://localhost:5000/api/v1/donations/:id             | get donation by id    |
-| PATCH  | http://localhost:5000/api/v1/donations/:id             | update donation by id |
-| DELETE | http://localhost:5000/api/v1/donations/:id             | delete donation by id |
+| Method | Endpoint                                    | Description                |
+| ------ | ------------------------------------------- | -------------------------- |
+| POST   | /api/v1/donation-types/create-donation-type | create donation type       |
+| GET    | /api/v1/donation-types                      | get all donation types     |
+| GET    | /api/v1/donation-types/:id                  | get donation type by id    |
+| PATCH  | /api/v1/donation-types/:id                  | update donation type by id |
+| DELETE | /api/v1/donation-types/:id                  | delete donation type by id |
+
+## Donation API
+
+| Method | Endpoint                          | Description           |
+| ------ | --------------------------------- | --------------------- |
+| POST   | /api/v1/donations/create-donation | create donation       |
+| GET    | /api/v1/donations                 | get all donations     |
+| GET    | /api/v1/donations/:id             | get donation by id    |
+| PATCH  | /api/v1/donations/:id             | update donation by id |
+| DELETE | /api/v1/donations/:id             | delete donation by id |
