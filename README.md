@@ -105,7 +105,7 @@ This is the server for the Donation Collection Application. It is built using No
       donor INT NOT NULL,
       createdAt VARCHAR(255) NOT NULL,
       updatedAt VARCHAR(255),
-      FOREIGN KEY (donor) REFERENCES donors(id),
+      FOREIGN KEY (donor) REFERENCES donors(id)
    );
    ```
 

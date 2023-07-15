@@ -1,6 +1,6 @@
 import { RowDataPacket } from 'mysql2/promise';
 import { pool } from '../../../server';
-import { ILoginUser, ILoginUserResponse } from './auth.interface';
+import { ILoginUser, ILoginUserResponse, IRefreshTokenResponse } from './auth.interface';
 import httpStatus from 'http-status';
 import ApiError from '../../../errors/ApiError';
 import bcrypt from 'bcrypt';
@@ -49,4 +49,34 @@ const loginUser = async (payload: ILoginUser): Promise<ILoginUserResponse> => {
    }
 };
 
-export const AuthService = { loginUser };
+//refresh token
+const refreshToken = async (token: string): Promise<IRefreshTokenResponse> => {
+   //verify refresh token
+   let verifiedToken = null;
+   try {
+      verifiedToken = jwtHelpers.verifyToken(token, config.jwt.refresh_secret as Secret);
+   } catch (err) {
+      throw new ApiError(httpStatus.FORBIDDEN, 'Invalid token !');
+   }
+   const { email, role } = verifiedToken;
+
+   //check if user exists
+   const [userExist] = await pool.query<RowDataPacket[]>('SELECT * FROM users WHERE email = ?', [
+      email,
+   ]);
+   const existsUsers: ILoginUser[] | RowDataPacket[] = userExist.map((row: RowDataPacket) => row);
+   if (existsUsers.length === 0) {
+      throw new ApiError(httpStatus.NOT_FOUND, 'User Not Found');
+   }
+
+   //generate access token
+   const accessToken = jwtHelpers.createToken(
+      { email: existsUsers[0].email, role: existsUsers[0].role },
+      config.jwt.secret as Secret,
+      config.jwt.access_expires_in as string,
+   );
+
+   return { accessToken };
+};
+
+export const AuthService = { loginUser, refreshToken };

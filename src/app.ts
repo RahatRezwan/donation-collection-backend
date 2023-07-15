@@ -2,6 +2,7 @@ import cors from 'cors';
 import express, { Application, NextFunction, Request, Response } from 'express';
 import httpStatus from 'http-status';
 import globalErrorHandler from './app/middleware/globalErrorHandler';
+import cookieParser from 'cookie-parser';
 const app: Application = express();
 
 //import router
@@ -12,6 +13,7 @@ import sendResponse from './app/shared/sendResponse';
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 /* Routes */
 app.use('/api/v1', routes);
