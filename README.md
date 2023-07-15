@@ -93,31 +93,19 @@ This is the server for the Donation Collection Application. It is built using No
    );
    ```
 
-4. Create donation_type Table
-
-   ```SQL
-   CREATE TABLE donation_type (
-      id INT AUTO_INCREMENT PRIMARY KEY,
-      title VARCHAR(255) NOT NULL,
-      description VARCHAR(1000),
-      thumbnail VARCHAR(255)
-   );
-   ```
-
-5. Create donation Table
+4. Create donation Table
 
    ```SQL
    CREATE TABLE donations (
       id INT AUTO_INCREMENT PRIMARY KEY,
-      donation_type INT NOT NULL,
+      donation_plan VARCHAR(355),
       amount DECIMAL(10, 2) NOT NULL,
       currency VARCHAR(50) NOT NULL,
       paymentMethod VARCHAR(50) NOT NULL,
       donor INT NOT NULL,
       createdAt VARCHAR(255) NOT NULL,
       updatedAt VARCHAR(255),
-      FOREIGN KEY (donor) REFERENCES Donors(id),
-      FOREIGN KEY (donation_type) REFERENCES donation_type(id)
+      FOREIGN KEY (donor) REFERENCES donors(id),
    );
    ```
 
@@ -152,16 +140,6 @@ This is the server for the Donation Collection Application. It is built using No
 | Method | Endpoint           | Description |
 | ------ | ------------------ | ----------- |
 | POST   | /api/v1/auth/login | Login       |
-
-## Donation Type API
-
-| Method | Endpoint                                    | Description                |
-| ------ | ------------------------------------------- | -------------------------- |
-| POST   | /api/v1/donation-types/create-donation-type | create donation type       |
-| GET    | /api/v1/donation-types                      | get all donation types     |
-| GET    | /api/v1/donation-types/:id                  | get donation type by id    |
-| PATCH  | /api/v1/donation-types/:id                  | update donation type by id |
-| DELETE | /api/v1/donation-types/:id                  | delete donation type by id |
 
 ## Donation API
 

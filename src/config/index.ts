@@ -9,6 +9,7 @@ export default {
    env: process.env.NODE_ENV,
    port: process.env.PORT,
    database_host: process.env.DB_HOST,
+   database_port: Number(process.env.DB_PORT),
    database_user: process.env.DB_USER,
    database_password: process.env.DB_PASSWORD,
    database_name: process.env.DB_NAME,

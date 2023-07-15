@@ -1,8 +1,7 @@
-import { IDonationType } from '../donationType/donationType.interface';
 import { IDonor } from '../donor/donor.interface';
 
 export type IDonation = {
-   donation_type: number | IDonationType; //donation type id as foreign key
+   donation_plan: string;
    amount: number;
    currency: string;
    paymentMethod: string;

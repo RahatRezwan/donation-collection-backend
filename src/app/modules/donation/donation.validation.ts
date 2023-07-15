@@ -2,9 +2,7 @@ import { z } from 'zod';
 
 const createDonationZodSchema = z.object({
    body: z.object({
-      donation_type: z.number({
-         required_error: 'Donation type is required',
-      }),
+      donation_plan: z.string().optional(),
       amount: z.number({
          required_error: 'Amount is required',
       }),
@@ -20,7 +18,7 @@ const createDonationZodSchema = z.object({
 
 const updateDonationZodSchema = z.object({
    body: z.object({
-      donation_type: z.number().optional(),
+      donation_plan: z.string().optional(),
       amount: z.number().optional(),
       currency: z.string().optional(),
       paymentMethod: z.string().optional(),
