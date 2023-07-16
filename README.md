@@ -137,9 +137,11 @@ This is the server for the Donation Collection Application. It is built using No
 
 ## Auth API
 
-| Method | Endpoint           | Description |
-| ------ | ------------------ | ----------- |
-| POST   | /api/v1/auth/login | Login       |
+| Method | Endpoint                   | Description                                     |
+| ------ | -------------------------- | ----------------------------------------------- |
+| POST   | /api/v1/auth/login         | Login                                           |
+| Get    | /api/v1/auth/refresh-token | Get access token using refresh token            |
+| Get    | /api/v1/auth/user-data     | Get user data by sending access token in header |
 
 ## Donation API
 

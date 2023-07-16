@@ -7,6 +7,7 @@ import bcrypt from 'bcrypt';
 import { jwtHelpers } from '../../../helpers/jwtHelpers';
 import config from '../../../config';
 import { Secret } from 'jsonwebtoken';
+import { IUser } from '../user/user.interface';
 
 const loginUser = async (payload: ILoginUser): Promise<ILoginUserResponse> => {
    const { email, password } = payload;
@@ -58,7 +59,7 @@ const refreshToken = async (token: string): Promise<IRefreshTokenResponse> => {
    } catch (err) {
       throw new ApiError(httpStatus.FORBIDDEN, 'Invalid token !');
    }
-   const { email, role } = verifiedToken;
+   const { email } = verifiedToken;
 
    //check if user exists
    const [userExist] = await pool.query<RowDataPacket[]>('SELECT * FROM users WHERE email = ?', [
@@ -79,4 +80,47 @@ const refreshToken = async (token: string): Promise<IRefreshTokenResponse> => {
    return { accessToken };
 };
 
-export const AuthService = { loginUser, refreshToken };
+//get user data by email
+const getUserData = async (email: string, role: string) => {
+   try {
+      //check if user exists
+      const [userExist] = await pool.query<RowDataPacket[]>('SELECT * FROM users WHERE email = ?', [
+         email,
+      ]);
+      let existedUsers: IUser[] | RowDataPacket[] = userExist.map((row: RowDataPacket) => row);
+      let user: IUser | RowDataPacket = existedUsers[0];
+      if (user.length === 0) {
+         throw new ApiError(httpStatus.NOT_FOUND, 'User Not Found');
+      }
+      if (role === 'donor') {
+         (user.donor =
+            user.donor !== null &&
+            (
+               (
+                  await pool.query('SELECT * FROM donors WHERE id = ?', [user.donor])
+               )[0] as RowDataPacket[]
+            )[0]),
+            delete user.admin;
+      }
+      if (role === 'admin') {
+         user.admin =
+            user.admin !== null &&
+            (
+               (
+                  await pool.query('SELECT * FROM admin WHERE id = ?', [user.admin])
+               )[0] as RowDataPacket[]
+            )[0];
+         delete user.donor;
+      }
+
+      if (user.password) {
+         delete user.password;
+      }
+
+      return existedUsers[0];
+   } catch (error) {
+      throw error;
+   }
+};
+
+export const AuthService = { loginUser, refreshToken, getUserData };

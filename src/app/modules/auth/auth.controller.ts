@@ -48,4 +48,18 @@ const refreshToken = catchAsync(async (req: Request, res: Response) => {
    });
 });
 
-export const AuthController = { loginUser, refreshToken };
+//get user data by email
+const getUserData = catchAsync(async (req: Request, res: Response) => {
+   const { email, role } = req.user;
+
+   const result = await AuthService.getUserData(email, role);
+
+   sendResponse(res, {
+      statusCode: httpStatus.OK,
+      message: 'Logged in successfully',
+      success: true,
+      data: result,
+   });
+});
+
+export const AuthController = { loginUser, refreshToken, getUserData };
