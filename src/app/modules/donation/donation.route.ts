@@ -15,9 +15,6 @@ router.post(
 /* get all donations */
 router.get('/', DonationController.getAllDonations);
 
-/* get single donation */
-router.get('/:id', DonationController.getSingleDonation);
-
 /* update single donation */
 router.patch(
    '/:id',

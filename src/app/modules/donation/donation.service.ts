@@ -22,24 +22,20 @@ const createDonation = async (payload: IDonation) => {
 //get all donations
 const getAllDonations = async () => {
    try {
-      const [donations] = await pool.query('SELECT * FROM donations');
-      return donations;
-   } catch (error) {
-      throw error;
-   }
-};
+      const [results] = await pool.query<RowDataPacket[]>('SELECT * FROM donations');
+      const donations: IDonation[] | RowDataPacket[] = results.map((row: RowDataPacket) => row);
 
-//get single donation
-const getSingleDonation = async (donationId: string) => {
-   try {
-      const [donation] = await pool.query<RowDataPacket[]>(
-         'SELECT * FROM donations WHERE id = ?',
-         Number(donationId),
-      );
-      const donationsData: IDonation[] | RowDataPacket[] = donation.map(
-         (row: RowDataPacket) => row,
-      );
-      return donationsData[0];
+      for (let donation of donations) {
+         donation.donor =
+            donation.donor !== null &&
+            (
+               (
+                  await pool.query('SELECT * FROM donors WHERE id = ?', [donation.donor])
+               )[0] as RowDataPacket[]
+            )[0];
+      }
+
+      return donations;
    } catch (error) {
       throw error;
    }
@@ -73,14 +69,21 @@ const deleteSingleDonation = async (donationId: string) => {
 //get donations by donor
 const getDonationsByDonor = async (donorId: string) => {
    try {
-      const [donations] = await pool.query<RowDataPacket[]>(
+      const [result] = await pool.query<RowDataPacket[]>(
          'SELECT * FROM donations WHERE donor = ?',
          Number(donorId),
       );
-      const donationsData: IDonation[] | RowDataPacket[] = donations.map(
-         (row: RowDataPacket) => row,
-      );
-      return donationsData;
+      const donations: IDonation[] | RowDataPacket[] = result.map((row: RowDataPacket) => row);
+      for (let donation of donations) {
+         donation.donor =
+            donation.donor !== null &&
+            (
+               (
+                  await pool.query('SELECT * FROM donors WHERE id = ?', [donation.donor])
+               )[0] as RowDataPacket[]
+            )[0];
+      }
+      return donations;
    } catch (error) {
       throw error;
    }
@@ -89,7 +92,6 @@ const getDonationsByDonor = async (donorId: string) => {
 export const DonationService = {
    createDonation,
    getAllDonations,
-   getSingleDonation,
    updateSingleDonation,
    deleteSingleDonation,
    getDonationsByDonor,

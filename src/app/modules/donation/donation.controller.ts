@@ -29,19 +29,6 @@ const getAllDonations = catchAsync(async (req: Request, res: Response) => {
    });
 });
 
-// get single donation
-const getSingleDonation = catchAsync(async (req: Request, res: Response) => {
-   const { id } = req.params;
-   const donation = await DonationService.getSingleDonation(id);
-
-   sendResponse(res, {
-      statusCode: httpStatus.OK,
-      success: true,
-      message: 'Donation fetched successfully',
-      data: donation,
-   });
-});
-
 // update single donation
 const updateSingleDonation = catchAsync(async (req: Request, res: Response) => {
    const { id } = req.params;
@@ -85,7 +72,6 @@ const getDonationsByDonor = catchAsync(async (req: Request, res: Response) => {
 export const DonationController = {
    createDonation,
    getAllDonations,
-   getSingleDonation,
    updateSingleDonation,
    deleteSingleDonation,
    getDonationsByDonor,
