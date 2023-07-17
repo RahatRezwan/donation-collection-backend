@@ -2,6 +2,7 @@ import express from 'express';
 import { UserController } from './user.controller';
 import validateRequest from '../../middleware/validateRequest';
 import { UserValidation } from './user.validation';
+import auth from '../../middleware/auth';
 const router = express.Router();
 
 /* create donor */
@@ -19,6 +20,6 @@ router.post(
 );
 
 /* get all users */
-router.get('/', UserController.getAllUsers);
+router.get('/', auth(), UserController.getAllUsers);
 
 export const userRoutes = router;
